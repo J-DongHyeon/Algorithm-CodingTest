@@ -7,8 +7,7 @@ int partition(char* [501], int, int);
 
 int main(void)
 {
-    int num, cmp, i;
-    int res = 0;
+    int num, cmp, i, res = 0;
     scanf("%d %d", &num, &cmp);
     char** strs = (char**) malloc(sizeof(char*) * num);
     for (i = 0; i < num; i++)
@@ -49,8 +48,7 @@ void quickSort(char* strs[501], int left, int right)
 int partition(char* strs[501], int left, int right)
 {
     int mid = (left + right) / 2;
-    int i;
-    int p_idx = left;
+    int i, p_idx = left;
     char* tmp;
     char* pivot = strs[mid];
     strs[mid] = strs[left];
