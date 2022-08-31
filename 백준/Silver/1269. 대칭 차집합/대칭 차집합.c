@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define BUCKET_SIZE 1000
+#define BUCKET_SIZE 100000
 
 typedef struct node {
     int data;
