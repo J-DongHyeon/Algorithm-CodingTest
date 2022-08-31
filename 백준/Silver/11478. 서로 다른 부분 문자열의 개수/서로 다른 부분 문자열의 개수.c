@@ -68,6 +68,30 @@ void add(char* data)
     hashTable[idx].cnt++;
 }
 
+void reset() 
+{
+    int i;
+    NODE* node, * sub;
+    for (i=0; i<BUCKET_SIZE; i++)
+    {
+        if (hashTable[i].cnt != 0)
+        {
+            node = hashTable[i].head;
+            sub = node->next;
+            while (sub != NULL)
+            {
+                free(node->data);
+                free(node);
+                node = sub;
+                sub = node->next;
+            }
+            free(node->data);
+            free(node);
+            hashTable[i].cnt = 0;
+        }
+    }
+}
+
 int main(void)
 {
     hashTable = (BUCKET*)malloc(BUCKET_SIZE * sizeof(BUCKET));
@@ -89,6 +113,7 @@ int main(void)
             sub[i] = '\0';
             add(sub);
         }
+        reset();
     }
     printf("%d", res);
 }
