@@ -17,10 +17,10 @@ typedef struct bucket {
 BUCKET* hashTable = NULL;
 int res = 0;
 
-NODE* createNode(char* data)
+NODE* createNode(char* data, int len)
 {
     NODE* newNode = (NODE*)malloc(sizeof(NODE));
-    char* buf = (char*)malloc(1001);
+    char* buf = (char*)malloc(len);
     strcpy(buf, data);
     newNode->data = buf;
     newNode->next = NULL;
@@ -44,9 +44,9 @@ int search(char* data, int idx)
     return 0;
 }
 
-void add(char* data)
+void add(char* data, int len)
 {
-    NODE* newNode = createNode(data);
+    NODE* newNode = createNode(data, len);
     int key = 0, i, idx;
     for (i = 0; data[i]; i++)
         key += data[i];
@@ -68,30 +68,6 @@ void add(char* data)
     hashTable[idx].cnt++;
 }
 
-void reset() 
-{
-    int i;
-    NODE* node, * sub;
-    for (i=0; i<BUCKET_SIZE; i++)
-    {
-        if (hashTable[i].cnt != 0)
-        {
-            node = hashTable[i].head;
-            sub = node->next;
-            while (sub != NULL)
-            {
-                free(node->data);
-                free(node);
-                node = sub;
-                sub = node->next;
-            }
-            free(node->data);
-            free(node);
-            hashTable[i].cnt = 0;
-        }
-    }
-}
-
 int main(void)
 {
     hashTable = (BUCKET*)malloc(BUCKET_SIZE * sizeof(BUCKET));
@@ -111,9 +87,8 @@ int main(void)
         {
             strncpy(sub, &buf[j], i);            
             sub[i] = '\0';
-            add(sub);
+            add(sub, i+1);
         }
-        reset();
     }
     printf("%d", res);
 }
